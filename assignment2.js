@@ -133,7 +133,7 @@ callbackFn can take three arguments:  the value of the element, the index of the
 */
 Array.prototype.mySome = function(callbackFn) {
 	for(let i = 0; i < this.length; i++) {
-		if(callbackFn(this[i], i, this)) { //callbackFn returns true if the elemnent at i passes the test
+		if (callbackFn(this[i], i, this)) { //callbackFn returns true if the elemnent at i passes the test
 			return true; //return true to the caller if at an element that passes the callback function test is found.
 		}
 	}
@@ -147,4 +147,31 @@ const arr2 = [-1, "hello", 8, 13,, 17] //contains an even number
 const isEven = (num) => num % 2 === 0;
 console.log("mySome: ", arr1.mySome(isEven));  //prints false
 console.log("some: ", arr2.some(isEven));  //prints true cause arr2 contains an even number
+*/
+
+// EVERY //
+/*
+Description: The every method executes the provided callbackFn function once for each element present in the array until it finds the one where callbackFn
+returns a falsy value. If such an element is found, the every method immediately returns false. Otherwise, if callbackFn returns a truthy value for all 
+elements, every returns true. The every() method is the opposite of the some() method. 
+@param callbackFn - A function to test for each element that can take three arguments.
+@return value - true if the callbackFn function returns a truthy value for every array element. Otherwise, false.
+*/
+Array.prototype.myEvery = function(callbackFn) {
+	for(let i = 0; i < this.length; i++) {
+		//when the callback function returns false, this if-statement evaluates to true and thus returns false to the caller. 
+		//returns false to caller when an element is found in the array that doesn't pass the callback function test.  
+		if (!callbackFn(this[i], i, this))  { 
+			return false;
+		}
+	}
+	return true; //if this line executes, that means that every element in the array passed the callback function test, so return true. 
+};
+
+// TEST FOR myEvery //
+/* 
+const isBelowThreshold = (currentValue) => currentValue < 40; //returns a boolean value
+const array1 = [1, 30, 39, 29, 10, 13];
+console.log("myEvery: ", array1.myEvery(isBelowThreshold));
+console.log("every: ", array1.every(isBelowThreshold)); // expected output: true
 */
