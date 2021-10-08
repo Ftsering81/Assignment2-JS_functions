@@ -80,7 +80,7 @@ Array.prototype.myMap = function(callbackFn) {
 
 // TEST FOR myMap //
 /*
-arr = [1, 2, 3];
+const arr = [1, 2, 3];
 const square = (num) => num * num; //this function returns the square of num
 console.log("myMap: ", arr.myMap(square)); //function square passed as argument for callback function
 console.log("map: ", arr.map(square));
@@ -95,8 +95,7 @@ Description: The filter() method creates a new array with all elements of the ca
 Array.prototype.myFilter = function(callbackFn) {
 	let filtered = []; //array to return
 	for (let i = 0; i < this.length; i++) {
-		passed = callbackFn(this[i], i, this) //callbackFn will return true if element at i passes the test
-		if(passed === true) {
+		if(callbackFn(this[i], i, this)) { //callbackFn will return true if element at i passes the callback function test
 			filtered.push(this[i]); //add the element at i to array filtered if it passes the callback function test
 		}
 		//elements that do not pass the callback function test are skipped and not added to the array filtered
@@ -121,3 +120,31 @@ console.log("myFilter: ", array.myFilter(isPrime));
 console.log("filter: ", array.filter(isPrime));
 */
 
+
+// SOME //
+/*
+Description: The some() method executes the callbackFn function once for each element present in the array until it finds the one where callbackFn returns a truthy value. 
+If such an element is found, some() immediately returns true. Otherwise, some() returns false. callbackFn is invoked only for indexes of the array with assigned values.
+It is not invoked for indexes which have been deleted or which have never been assigned values.
+
+@param callbackFn - A function to test for each element of the array. The callbackFn returns a boolean value.
+callbackFn can take three arguments:  the value of the element, the index of the element(optional), and the Array object being traversed(optional).
+@return value - true if the callback function returns a truthy value for at least one element in the array. Otherwise, false.
+*/
+Array.prototype.mySome = function(callbackFn) {
+	for(let i = 0; i < this.length; i++) {
+		if(callbackFn(this[i], i, this)) { //callbackFn returns true if the elemnent at i passes the test
+			return true; //return true to the caller if at an element that passes the callback function test is found.
+		}
+	}
+	return false; //return false if the callback function didn't evaluate to true for any of the elements in the arr.
+};
+
+// TEST FOR mySOME // 
+/*
+const arr1 = [-1, "hello", 3, 13,, 17] //no even numbers
+const arr2 = [-1, "hello", 8, 13,, 17] //contains an even number
+const isEven = (num) => num % 2 === 0;
+console.log("mySome: ", arr1.mySome(isEven));  //prints false
+console.log("some: ", arr2.some(isEven));  //prints true cause arr2 contains an even number
+*/
