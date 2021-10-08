@@ -86,3 +86,38 @@ console.log("myMap: ", arr.myMap(square)); //function square passed as argument 
 console.log("map: ", arr.map(square));
 */
 
+// FILTER //
+/*
+Description: The filter() method creates a new array with all elements of the caller array that pass the test implemented by the provided function.
+@param callbackFn - Function is a predicate, to test each element of the array. Returns a value that coerces to true to keep the element, or to false otherwise.
+@return value - A new array with the elements that pass the test. If no elements pass the test, an empty array will be returned.
+*/
+Array.prototype.myFilter = function(callbackFn) {
+	let filtered = []; //array to return
+	for (let i = 0; i < this.length; i++) {
+		passed = callbackFn(this[i], i, this) //callbackFn will return true if element at i passes the test
+		if(passed === true) {
+			filtered.push(this[i]); //add the element at i to array filtered if it passes the callback function test
+		}
+		//elements that do not pass the callback function test are skipped and not added to the array filtered
+	}
+	return filtered; //return the filtered array
+};
+
+// TEST FOR myFilter  //
+/*
+const array = [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+
+function isPrime(num) { //callback function tests to see if a number is a prime number or not. Returns true if prime. Else false.
+  for (let i = 2; num > i; i++) {
+    if (num % i == 0) {
+      return false;
+    }
+  }
+  return num > 1;
+}
+
+console.log("myFilter: ", array.myFilter(isPrime));
+console.log("filter: ", array.filter(isPrime));
+*/
+
