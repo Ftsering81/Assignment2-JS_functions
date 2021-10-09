@@ -485,3 +485,39 @@ const arr = ['a', 'b', 'c'];
 console.log("keys: ", Object.keys(arr)); // console: ['0', '1', '2']
 console.log("grabKeys: ", Object.grabKeys(arr)); // console: ['0', '1', '2']
 */
+
+
+// VALUES //
+/*
+Description: The Object.values() method returns an array of a given object's own enumerable property values, 
+in the same order as that provided by a for...in loop. (The only difference is that a for...in loop enumerates 
+properties in the prototype chain as well.)
+
+@param obj - The object whose enumerable own property values are to be returned.
+@return value - An array containing the given object's own enumerable property values.
+*/
+Object.grabValues = function(obj) {
+	let values = []; //this array will store the values of the object
+	//iterates over the properties of the object obj
+	for (const property in obj) {
+		//Check that the property is the object's own property bc we only want the object's own enumerable property values.
+		if (obj.hasOwnProperty(property)) {
+			values.push(obj[property]); //adds the value for the given property of the object to the array values
+		}
+
+	}
+	return values;
+};
+
+// TEST FOR grabValues //
+/*
+// book object
+ let book = {title: "The Alchemist", author: "Paulo Coelho", pages: 163}
+ console.log("keys: ", Object.values(book)) // console: ['The Alchemist', 'Paulo Coelho', 163]
+ console.log("grabKeys: ", Object.grabValues(book))
+
+// simple array object
+const arr = ['a', 'b', 'c'];
+console.log("keys: ", Object.values(arr)); // console: ['a', 'b', 'c']
+console.log("grabKeys: ", Object.grabValues(arr)); 
+*/
