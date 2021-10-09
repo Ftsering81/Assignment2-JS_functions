@@ -450,3 +450,38 @@ console.log("myLastIndexOf: ", numbers.myLastIndexOf(5, -2)); //1
 console.log("lastIndexOf: ", numbers.lastIndexOf(2, -10)); // -1 bc computed index still negative
 console.log("myLastIndexOf: ", numbers.myLastIndexOf(2, -10)); // -1
 */
+
+// KEYS //
+/*
+Description: The Object.keys() method returns an array of a given object's own enumerable property
+names, iterated in the same order that a normal loop would. 
+
+@param obj - The object of which the enumerable's own properties are to be returned.
+@return value - An array of strings that represent all the enumerable properties of the given object.
+*/
+Object.grabKeys = function(obj) {
+	let properties = []; //array to store property names or keys of the object
+
+	//iterate over each property/key of the object obj
+	for (const property in obj) {
+		//check if the property belongs to the object obj by calling its hasOwnProperty() method. 
+		//if the property belongs to the object obj, then this evaluates to true and the property is added to the array of properties.
+		if (obj.hasOwnProperty(property)) {
+			properties.push(property); //add property to the array properties
+		}
+	}
+	return properties; //return the array with the keys of the object
+};
+
+// TEST FOR grabKeys //
+/*
+// book object
+ let book = {title: "The Alchemist", author: "Paulo Coelho", pages: 163}
+ console.log("keys: ", Object.keys(book))
+ console.log("grabKeys: ", Object.grabKeys(book))
+
+// simple array object
+const arr = ['a', 'b', 'c'];
+console.log("keys: ", Object.keys(arr)); // console: ['0', '1', '2']
+console.log("grabKeys: ", Object.grabKeys(arr)); // console: ['0', '1', '2']
+*/
