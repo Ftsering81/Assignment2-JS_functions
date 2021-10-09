@@ -230,7 +230,7 @@ Array.prototype.myReduce = function(callbackFn, initialValue) {
 
 // TEST FOR myReduce //
  /*
- const arr = [1, 2, 3, 4];
+const arr = [1, 2, 3, 4];
 const sum = (a, b) => a + b; //arrow function that adds two numbers
 
 console.log("myReduce without initial value: ", arr.myReduce(sum)); //expected output: 10
@@ -242,4 +242,66 @@ console.log("reduce with initial value of 10: ", arr.reduce(sum, 10)); //expecte
 const empty_arr = [];
 console.log(empty_arr.myReduce(sum));
 console.log(empty_arr.reduce(sum));
+*/
+
+// INCLUDES //
+/*
+Description: The includes() method determines whether an array includes a certain value among its entries, 
+returning true or false as appropriate.
+
+@param searchElement - The value to search for.
+@param fromIndex (optional) - The position in the array at which to begin searching for searchElement. 
+	- Defaults to 0 if not specified(searches from the beginning).
+	- If fromIndex is a positive value, the index is that value.
+	- If fromIndex is a negative value, compute the positive index by adding the negative value to the length of the array (arr.length + fromIndex)
+@return value - A boolean value which is true if the value searchElement is found within the array (or the part of the array indicated by the index fromIndex, if specified).
+*/ 
+
+Array.prototype.myIncludes = function(searchElement, fromIndex) {
+
+	//if no argument is specified for fromIndex, set fromIndex to 0 
+	if (fromIndex === undefined) {
+		fromIndex = 0; //default value
+	}
+	//if fromIndex is specified and it is a negative number, update fromIndex with corresponding positive index value
+	else if (fromIndex < 0) { 
+		fromIndex = this.length + fromIndex; 
+	}
+
+	//if fromIndex specified is out of bounds, return false 
+	if (fromIndex >= this.length) {
+		return false;
+	}
+
+	for (let i = fromIndex; i < this.length; i++) {
+
+		// Returns true to caller if the current element value equals to the searchElement value
+		if(this[i] === searchElement || (Number.isNaN(searchElement) && Number.isNaN(this[i])) ) {
+			//Can't use the equality operators to compare NaN values so use the Number.isNaN() function to determine whether a value is NaN or not.
+			//if the searchElement is NaN and the current element is a NaN, return true bc searchElement is found
+			return true; 
+		}
+	}
+	//if the for loop doesn't return true, it means the searchElement was not found in the array so return false
+	return false; 
+};
+
+// TEST FOR myIncludes //
+/*
+const pets = ['cat', 'dog', 'bat'];
+
+console.log("includes: ", pets.includes('cat'));
+//expected output: true
+console.log("myIncludes: ", pets.myIncludes('cat'));
+//expected output: true
+
+console.log("includes: ", pets.includes('at'));
+//expected output: false
+console.log("myIncludes: ", pets.myIncludes('at'));
+// expected output: false
+
+console.log("myIncludes: ", [1, 5, "hello", NaN, 10].myIncludes(NaN))
+console.log("includes: ", [1, 5, "hello", NaN, 10].includes(NaN))
+console.log("myIncludes: ", [1, 5, "hello", NaN, 10].myIncludes(5, -1))
+console.log("includes: ", [1, 5, "hello", NaN, 10].includes(5, -1))
 */
