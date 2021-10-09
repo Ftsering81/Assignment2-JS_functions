@@ -175,3 +175,71 @@ const array1 = [1, 30, 39, 29, 10, 13];
 console.log("myEvery: ", array1.myEvery(isBelowThreshold));
 console.log("every: ", array1.every(isBelowThreshold)); // expected output: true
 */
+
+
+// REDUCE //
+/* 
+Description: The reduce() method executes a user-supplied “reducer” callback function on each element of the array, passing in the return value 
+from the calculation on the preceding element. The final result of running the reducer across all elements of the array is a single value.
+
+@param callbackFn - A “reducer” function that takes four arguments: 
+	- previousValue (the value resulting from the previous call to callbackfn)
+	- currentValue (the value of the current element)
+	- currentIndex Optional
+	- array (the array to traverse) Optional
+@param initialValue (optional) - A value to which previousValue is initialized the first time the callback is called. 
+- If initialValue is specified, that also causes currentValue to be initialized to the first value in the array. 
+- If initialValue is not specified, previousValue is initialized to the first value in the array, and currentValue is initialized to the second value in the array.
+
+@return value - The single value that results from running the “reducer” callback function to completion over the entire array.
+
+Exceptions - Throws a TypeError if the array contains no elements and initialValue is not provided.
+*/
+Array.prototype.myReduce = function(callbackFn, initialValue) {
+	//Throws a TypeError if the array contains no elements and initialValue is not provided.
+	if(this.length === 0 && initialValue === undefined) { 
+		throw new TypeError("Reduce of empty array with no initial value"); //throws a TypeError with the error message
+	}
+
+	//If the intialValue is not specified, previousValue of the callback function is initialized to the first value in the array
+	// and currentvalue is initialized to the second value in the array.
+	if(initialValue === undefined) {
+		let previousValue = this[0]; //previousValue initalized to the first element of the array
+		// i is the index of the currentValue and starts from 1 bc currentValue is initalized to the second element.
+		for(let i = 1; i < this.length; i++) { 
+			previousValue = callbackFn(previousValue, this[i], i, this); //previousValue updated with value returned by the callbackFn 
+		}
+		return previousValue; 
+		//if there was only one element in the array, callbackFn not called and the first and only element of the array is returned.
+		//if the length of array was greater than 1, returns the single value that resulted from applying the callback function to the array
+	}
+	
+	//If initialValue is specified, the initialValue will be the previousValue
+	// and the currentValue will be intialized to the first element of the array
+	if(initialValue != undefined) {
+		previousValue = initialValue; 
+		// i is the index of the currentValue and starts from 0 bc currentValue is initalized to the first element of the array
+		for(let i = 0; i < this.length; i++) { 
+			previousValue = callbackFn(previousValue, this[i], i, this); //previousValue updated with value returned by the callbackFn 
+		}
+		return previousValue;
+		//if array is empty, callback function is not called and the initialValue is returned
+		//if array is not empty, returns the single value that resulted from applying the callback function to the array
+	}
+};
+
+// TEST FOR myReduce //
+ /*
+ const arr = [1, 2, 3, 4];
+const sum = (a, b) => a + b; //arrow function that adds two numbers
+
+console.log("myReduce without initial value: ", arr.myReduce(sum)); //expected output: 10
+console.log("reduce without initial value: ", arr.reduce(sum)); //expected output: 10
+
+console.log("myReduce with initial value of 10: ", arr.myReduce(sum, 10)); //expected output: 20
+console.log("reduce with initial value of 10: ", arr.reduce(sum, 10)); //expected output: 20
+
+const empty_arr = [];
+console.log(empty_arr.myReduce(sum));
+console.log(empty_arr.reduce(sum));
+*/
