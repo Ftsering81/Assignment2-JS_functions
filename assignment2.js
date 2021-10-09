@@ -365,3 +365,34 @@ console.log("myIndexOf: ", array.myIndexOf(2, 6)); // -1 bc out of bounds
 console.log("indexOf: ", array.indexOf(7));     // -1 
 console.log("myIndexOf: ", array.myIndexOf(7));     // -1
 */
+
+// PUSH //
+/*
+Description: The push() method adds one or more elements to the end of an array and returns the new length of the array.
+@param elementN - The element(s) to add to the end of the array. Basically an array of element(s) to add to the caller array.
+@return value - The new length property of the object upon which the method was called.
+	- remember that the length property of an array object sets or returns the number of elements in that array
+*/
+Array.prototype.myPush = function(...elementN) {
+	//Loops through elementN or the array of element(s) provided to add to the caller array object and adds each element 
+	// one by one to the end of the caller array.
+	for(let i = 0; i < elementN.length; i++) {
+		this[this.length] = elementN[i]; //add the elements to add one by one to the end of the caller array object
+		//this[this.length] accesses the end of the array where the new element is added.
+		//the length property of the array automatically increments by 1 when a new element is added at the end of the array. 
+	}
+	return this.length; //return the length property of the caller array object
+};
+
+// TEST FOR myPush //
+/*
+console.log([1, 3,,4, 5].push(10, 11))   //prints 7
+console.log([1, 3,,4, 5].myPush(10, 11))  //prints 7 
+console.log([].push(1)) //prints 1
+console.log([].myPush(1)) //prints 1
+let vegetables = ['parsnip', 'potato']
+let moreVegs = ['celery', 'beetroot']
+// Merge the second array into the first one
+vegetables.myPush(...moreVegs);
+console.log(vegetables)  // prints ['parsnip', 'potato', 'celery', 'beetroot']
+*/
