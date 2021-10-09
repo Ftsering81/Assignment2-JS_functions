@@ -396,3 +396,57 @@ let moreVegs = ['celery', 'beetroot']
 vegetables.myPush(...moreVegs);
 console.log(vegetables)  // prints ['parsnip', 'potato', 'celery', 'beetroot']
 */
+
+// LASTINDEXOF //
+/*
+Description: The lastIndexOf() method returns the last index at which a given element can be found in the array,
+or -1 if it is not present. The array is searched backwards, starting at fromIndex.
+
+@param searchElement - Element to locate in the array.
+@param fromIndex (optional) - The index at which to start searching backwards. 
+	- fromIndex defaults to the array's length minus one (arr.length - 1), i.e. the whole array will be searched.
+	- If the index is greater than or equal to the length of the array, the whole array will be searched. 
+	- If the index negative, it is taken as the offset from the end of the array.
+	- If the calculated index is less than 0, -1 is returned, i.e. the array will not be searched.
+@return value - The last index of the element in the array that matches the searchElement; -1 if not found.
+*/
+Array.prototype.myLastIndexOf = function(searchElement, fromIndex) {
+	//If no argument is provided for fromIndex or if fromIndex provided is greater than or equal to the length of the array,
+	// then the whole array must be searched, so set fromIndex to the index of the last element of the array.
+	if (fromIndex === undefined || fromIndex >= this.length) {
+		fromIndex = this.length - 1; //sets fromIndex to index of the last element in the array
+	}
+	//If a negative index value is provided for fromIndex, compute the positive index value from the negative index
+	else if (fromIndex < 0) {
+		fromIndex = this.length + fromIndex; 
+		//if the computed index is still negative, return -1. The array will not be searched bc invalid index was provided
+		if(fromIndex < 0) {
+			return -1;
+		}
+	}
+	//Search the array backwards, starting at fromIndex to index 0 of the array.
+	for(let i = fromIndex; i >= 0; i --) {
+		//If searchElement is located in the array at index i, that index is the last index at which that element can be found,
+		// so return that index i. 
+		if(this[i] === searchElement) {
+			return i;			
+		}
+	}
+	return -1; //if the searchElement is not found in the array, then return -1
+
+};
+
+// TEST FOR myLastIndexOf //
+/*
+const numbers = [2, 5, 9, 2];
+console.log("lastIndexOf: ", numbers.lastIndexOf(2)); //3
+console.log("myLastIndexOf: ", numbers.myLastIndexOf(2)); //3
+console.log("lastIndexOf: ", numbers.lastIndexOf(7)); //-1 bc 7 is not in the array
+console.log("myLastIndexOf: ", numbers.myLastIndexOf(7)); //-1
+console.log("lastIndexOf: ", numbers.lastIndexOf(2, 2)); //0
+console.log("myLastIndexOf: ", numbers.myLastIndexOf(2, 2)); //0
+console.log("lastIndexOf: ", numbers.lastIndexOf(5, -2)); //1
+console.log("myLastIndexOf: ", numbers.myLastIndexOf(5, -2)); //1
+console.log("lastIndexOf: ", numbers.lastIndexOf(2, -10)); // -1 bc computed index still negative
+console.log("myLastIndexOf: ", numbers.myLastIndexOf(2, -10)); // -1
+*/
