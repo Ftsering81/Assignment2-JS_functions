@@ -256,20 +256,16 @@ returning true or false as appropriate.
 	- If fromIndex is a negative value, compute the positive index by adding the negative value to the length of the array (arr.length + fromIndex)
 @return value - A boolean value which is true if the value searchElement is found within the array (or the part of the array indicated by the index fromIndex, if specified).
 */ 
+
 Array.prototype.myIncludes = function(searchElement, fromIndex) {
 
 	//if no argument is specified for fromIndex, set fromIndex to 0 
 	if (fromIndex === undefined) {
 		fromIndex = 0; //default value
 	}
-	//if value specified for fromIndex is negative, compute the corresponding positive index.
+	//if fromIndex is specified and it is a negative number, update fromIndex with corresponding positive index value
 	else if (fromIndex < 0) { 
-		fromIndex = this.length + fromIndex; //compute positive index from negative index provided
-		
-		//If the computed index is still less than 0, set it to 0 so that the array is searched from the first element.
-		if(fromIndex < 0) {
-			fromIndex = 0;
-		}
+		fromIndex = this.length + fromIndex; 
 	}
 
 	//if fromIndex specified is out of bounds, return false 
@@ -278,6 +274,7 @@ Array.prototype.myIncludes = function(searchElement, fromIndex) {
 	}
 
 	for (let i = fromIndex; i < this.length; i++) {
+
 		// Returns true to caller if the current element value equals to the searchElement value
 		if(this[i] === searchElement || (Number.isNaN(searchElement) && Number.isNaN(this[i])) ) {
 			//Can't use the equality operators to compare NaN values so use the Number.isNaN() function to determine whether a value is NaN or not.
@@ -307,61 +304,39 @@ console.log("myIncludes: ", [1, 5, "hello", NaN, 10].myIncludes(NaN))
 console.log("includes: ", [1, 5, "hello", NaN, 10].includes(NaN))
 console.log("myIncludes: ", [1, 5, "hello", NaN, 10].myIncludes(5, -1))
 console.log("includes: ", [1, 5, "hello", NaN, 10].includes(5, -1))
-console.log("myIncludes: ", [1, 5, "hello", NaN, 10].myIncludes(5, -100))
-console.log("includes: ", [1, 5, "hello", NaN, 10].includes(5, -100))
 */
 
-// INDEXOF //
+// PUSH //
 /*
-Description: The indexOf() method returns the first index at which a given element can be found in the array, or -1 if it is not present.
-@param searchElement - the element to locate in the array
-@param fromIndex (optional) - The index to start the search at. 
-	- If the index is greater than or equal to the array's length, -1 is returned, which means the array will not be searched.
-@return value - The first index of the element in the array; -1 if not found.
-*/
-Array.prototype.myIndexOf = function(searchElement, fromIndex) {
-	//set fromIndex to default to 0 if no argument specified for it
-	if(fromIndex === undefined) {
-		fromIndex = 0;
-	}
-	//if value specified for fromIndex is negative, compute the corresponding positive index.
-	else if (fromIndex < 0) { 
-		fromIndex = this.length + fromIndex; //compute positive index from negative index provided
-		
-		//If the computed index is still less than 0, set it to 0 so that the array is searched from the first element.
-		if(fromIndex < 0) {
-			fromIndex = 0;
-		}
-	}	
-	//if fromIndex specified is out of bounds, return -1 and the array will not be searched.
-	if (fromIndex >= this.length) {
-		return -1;
-	}
+Description: The push() method adds one or more elements to the end of an array and returns the new length of the array.
+@param elementN - The element(s) to add to the end of the array. Basically an array of element(s) to add to the caller array.
+@return value - The new length property of the object upon which the method was called.
+	- remember that the length property of an array object sets or returns the number of elements in that array
 
-	for(let i = fromIndex; i < this.length; i++) {
-		//if the element at index i is the same as the searchElement, return index i
-		if(this[i] === searchElement) {
-			return i; 
-		}
+Summary: Adding the new elements to the end of the caller array object and then updating the length property of that array
+object with the new length of the array. 
+
+*/
+Array.prototype.myPush = function(...elementN) {
+	//Loops through elementN or the array of element(s) provided to add to the caller array object and adds each element 
+	// one by one to the end of the caller array.
+	for(let i = 0; i < elementN.length; i++) {
+		this[this.length] = elementN[i]; //add the elements to add one by one to the end of the caller array object
+		//this[this.length] accesses the end of the array where the new element is added.
+		//the length property of the array automatically increments by 1 when a new element is added at the end of the array. 
 	}
-	//if the for loop doesn't return to caller, that means the searchElement was not found in the array so return -1.
-	return -1;
+	return this.length; //return the length property of the caller array object
 };
 
-// TEST FOR myIndexOf //
+// TEST FOR myPush //
 /*
-const array = [2, 9, 9];
-
-console.log("indexOf: ", array.indexOf(2));     // 0
-console.log("myIndexOf: ", array.myIndexOf(2));     // 0
-console.log("indexOf: ", array.indexOf(9, 2));  //2
-console.log("myIndexOf: ", array.myIndexOf(9, 2));  //2
-console.log("indexOf: ", array.myIndexOf(9, -10)); //1 
-console.log("myIndexOf: ", array.indexOf(9, -10)); //1
-console.log("indexOf: ", array.indexOf(2, -3)); // 0
-console.log("myIndexOf: ", array.myIndexOf(2, -3)); // 0
-console.log("indexOf: ", array.indexOf(2, 6)); // -1 bc out of bounds
-console.log("myIndexOf: ", array.myIndexOf(2, 6)); // -1 bc out of bounds
-console.log("indexOf: ", array.indexOf(7));     // -1 
-console.log("myIndexOf: ", array.myIndexOf(7));     // -1
+console.log([1, 3,,4, 5].push(10, 11))   //prints 7
+console.log([1, 3,,4, 5].myPush(10, 11))  //prints 7 
+console.log([].push(1)) //prints 1
+console.log([].myPush(1)) //prints 1
+let vegetables = ['parsnip', 'potato']
+let moreVegs = ['celery', 'beetroot']
+// Merge the second array into the first one
+vegetables.myPush(...moreVegs);
+console.log(vegetables)  // prints ['parsnip', 'potato', 'celery', 'beetroot']
 */
